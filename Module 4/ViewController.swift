@@ -26,6 +26,10 @@ class ViewController: UIViewController {
     var mins: Int = 0
     var secs: Int = 0
     
+    var hoursTag : String = ""
+    var minsTag : String = ""
+    var secsTag : String = ""
+    
     var Toptimer = Timer()
     var timer = Timer()
     
@@ -86,8 +90,30 @@ class ViewController: UIViewController {
     }
         
         func updateLabel() {
+        
+            if hours < 10{
+                hoursTag = "0"
+            }
+            else {
+               hoursTag = ""
+            }
             
-            countdownTimer.text = "Time Remaining: \(hours):\(mins):\(secs)"
+            if mins < 10 {
+                minsTag = "0"
+            }
+            else {
+                minsTag = ""
+            }
+            
+            if secs < 10 {
+                secsTag = "0"
+            }
+            else {
+                secsTag = ""
+            }
+                
+                countdownTimer.text = "Time Remaining: \(hoursTag)\(hours):\(minsTag)\(mins):\(secsTag)\(secs)"
+           
             
         }
         
