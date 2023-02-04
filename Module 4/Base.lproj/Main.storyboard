@@ -31,13 +31,13 @@
                                 <rect key="frame" x="82" y="678" width="229" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Start"/>
                                 <connections>
                                     <action selector="tappedButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hYx-NB-dGb"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eNd-XW-n47">
-                                <rect key="frame" x="175" y="721" width="42" height="21"/>
+                                <rect key="frame" x="16" y="721" width="361" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -48,6 +48,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="buttonText" destination="fyY-1j-ZcL" id="uzp-ep-xsb"/>
                         <outlet property="countdownTimer" destination="eNd-XW-n47" id="7Pb-TB-VfE"/>
                         <outlet property="liveClock" destination="PHj-50-XJU" id="qq2-7A-slV"/>
                         <outlet property="timePicker" destination="R8N-Oz-SdN" id="M3A-UI-uFx"/>
