@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var countdownTimer: UILabel!
     
     @IBOutlet weak var buttonText: UIButton!
+
     
     var hours: Int = 0
     var mins: Int = 0
@@ -32,6 +33,7 @@ class ViewController: UIViewController {
     
     var Toptimer = Timer()
     var timer = Timer()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
