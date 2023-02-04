@@ -67,6 +67,8 @@ class ViewController: UIViewController {
             
         }
         
+    }
+        
         func startCountdown() {
             Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
                 if self.secs > 0 {
@@ -87,7 +89,7 @@ class ViewController: UIViewController {
             })
         }
         
-    }
+    
         
         func updateLabel() {
         
