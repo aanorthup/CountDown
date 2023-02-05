@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 extension Date {
     var hour: Int { return Calendar.current.component(.hour, from: self) }
@@ -22,8 +23,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var countdownTimer: UILabel!
     
     @IBOutlet weak var buttonText: UIButton!
-
     
+    var sound: AVAudioPlayer?
+
     var hours: Int = 0
     var mins: Int = 0
     var secs: Int = 0
@@ -63,6 +65,7 @@ class ViewController: UIViewController {
                 timer?.invalidate()
                 timer = nil
                 //stop sound
+                sound?.stop()
                 
             }
         }
@@ -96,8 +99,16 @@ class ViewController: UIViewController {
     }
     
     func startSound() {
-            buttonText.setTitle("Stop Music", for: .normal)
+        buttonText.setTitle("Stop Music", for: .normal)
             //play sound
+        guard let url = Bundle.main.url(forResource: "cartoon", withExtension: ".mp3") else { return }
+        
+        do {
+            sound = try AVAudioPlayer(contentsOf: url)
+            sound?.play()
+        } catch let error {
+            print("Error playing sound. \(error.localizedDescription)")
+        }
             
             
         }
