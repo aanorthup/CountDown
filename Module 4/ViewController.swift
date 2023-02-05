@@ -52,33 +52,17 @@ class ViewController: UIViewController {
     var launchBool: Bool = false {
         didSet {
             if launchBool == true {
-                let time = floor((timePicker.countDownDuration))
+                 startTimer()
                 
-                if time > 0 {
-                    let initialHours: Int = Int(time) / 3600
-                    let remainder: Int = Int(time) - (initialHours * 3600)
-                    let minutes: Int = remainder / 60
-                    let seconds: Int = Int(time) - (initialHours * 3600) - (minutes * 60)
-                    
-                    hours = initialHours
-                    mins = minutes
-                    secs = seconds
-                    
-                    updateLabel()
-                    
-                    startCountdown()
                 }
                     
             
             
-            } else {
-                buttonText.setTitle("Start", for: .normal)
+             else {
+                buttonText.setTitle("Start Timer", for: .normal)
                 timer?.invalidate()
                 timer = nil
-                hours = 0
-                mins = 0
-                secs = 0
-                //stop music
+                //stop sound
                 
             }
         }
@@ -90,7 +74,33 @@ class ViewController: UIViewController {
         
     }
     
+    func startTimer() {
+        let time = floor((timePicker.countDownDuration))
+        
+        if time > 0 {
+            let initialHours: Int = Int(time) / 3600
+            let remainder: Int = Int(time) - (initialHours * 3600)
+            let minutes: Int = remainder / 60
+            let seconds: Int = Int(time) - (initialHours * 3600) - (minutes * 60)
+            
+            hours = initialHours
+            mins = minutes
+            secs = seconds
+            
+            updateLabel()
+            
+            startCountdown()
+        }
+        
+       
+    }
     
+    func startSound() {
+            buttonText.setTitle("Stop Music", for: .normal)
+            //play sound
+            
+            
+        }
         
         func startCountdown() {
             Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
@@ -110,6 +120,7 @@ class ViewController: UIViewController {
                 
                 self.updateLabel()
             })
+          
         }
         
     
@@ -139,7 +150,9 @@ class ViewController: UIViewController {
                 
                 countdownTimer.text = "Time Remaining: \(hoursTag)\(hours):\(minsTag)\(mins):\(secsTag)\(secs)"
            
-            
+            if hours + mins + secs < 1 {
+                startSound()
+            }
         }
         
         
