@@ -14,6 +14,7 @@ extension Date {
 class ViewController: UIViewController {
     
     
+    @IBOutlet weak var imageView: UIStackView!
     @IBOutlet weak var liveClock: UILabel!
     
     @IBOutlet weak var timePicker: UIDatePicker!
@@ -32,7 +33,8 @@ class ViewController: UIViewController {
     var secsTag : String = ""
     
     var Toptimer = Timer()
-    var timer = Timer()
+    var timer:Timer?
+    var backTimer = Timer()
     
     
     override func viewDidLoad() {
@@ -47,29 +49,48 @@ class ViewController: UIViewController {
         
     }
     
+    var launchBool: Bool = false {
+        didSet {
+            if launchBool == true {
+                let time = floor((timePicker.countDownDuration))
+                
+                if time > 0 {
+                    let initialHours: Int = Int(time) / 3600
+                    let remainder: Int = Int(time) - (initialHours * 3600)
+                    let minutes: Int = remainder / 60
+                    let seconds: Int = Int(time) - (initialHours * 3600) - (minutes * 60)
+                    
+                    hours = initialHours
+                    mins = minutes
+                    secs = seconds
+                    
+                    updateLabel()
+                    
+                    startCountdown()
+                }
+                    
+            
+            
+            } else {
+                buttonText.setTitle("Start", for: .normal)
+                timer?.invalidate()
+                timer = nil
+                hours = 0
+                mins = 0
+                secs = 0
+                //stop music
+                
+            }
+        }
+    }
+    
     
     @IBAction func tappedButton(_ sender: Any) {
-        
-        let time = floor((timePicker.countDownDuration))
-        
-        if time > 0 {
-            let initialHours: Int = Int(time) / 3600
-            let remainder: Int = Int(time) - (initialHours * 3600)
-            let minutes: Int = remainder / 60
-            let seconds: Int = Int(time) - (initialHours * 3600) - (minutes * 60)
-            
-            hours = initialHours
-            mins = minutes
-            secs = seconds
-            
-            updateLabel()
-            
-            startCountdown()
-            
-            
-        }
+        launchBool = !launchBool
         
     }
+    
+    
         
         func startCountdown() {
             Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
@@ -134,15 +155,15 @@ class ViewController: UIViewController {
         }
         
         func scheduleBackground() {
-            timer = Timer(fireAt: Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 0..<12 ~= Date().hour ? 12 : 0), matchingPolicy: .nextTime)!, interval: 0, target: self, selector: #selector(changeBackground), userInfo: nil, repeats: false)
-            print(timer.fireDate)
-            RunLoop.main.add(timer, forMode: .common)
-            print("new background change scheduled at:", timer.fireDate.description(with: .current))
+            backTimer = Timer(fireAt: Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 0..<12 ~= Date().hour ? 12 : 0), matchingPolicy: .nextTime)!, interval: 0, target: self, selector: #selector(changeBackground), userInfo: nil, repeats: false)
+            //print(backTimer.fireDate)
+            RunLoop.main.add(backTimer, forMode: .common)
+            //print("new background change scheduled at:", backTimer.fireDate.description(with: .current))
         }
         
         @objc func changeBackground() {
             //check for am or pm
-            self.view.backgroundColor = 0..<12 ~= Date().hour ? .yellow : .blue
+            self.view.backgroundColor = 0..<12 ~= Date().hour ? UIColor(patternImage: UIImage(named: "am")!) : UIColor(patternImage: UIImage(named: "pm")!)
             
             //schedule timer
             scheduleBackground()
