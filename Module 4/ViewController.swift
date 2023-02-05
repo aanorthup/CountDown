@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     var hours: Int = 0
     var mins: Int = 0
     var secs: Int = 0
+    var timeLeft: Int = 1
     
     var hoursTag : String = ""
     var minsTag : String = ""
@@ -55,6 +56,7 @@ class ViewController: UIViewController {
         didSet {
             if launchBool == true {
                  startTimer()
+
                 
                 }
                     
@@ -66,6 +68,8 @@ class ViewController: UIViewController {
                 timer = nil
                 //stop sound
                 sound?.stop()
+                timeLeft = 1
+                 
                 
             }
         }
@@ -90,6 +94,9 @@ class ViewController: UIViewController {
             mins = minutes
             secs = seconds
             
+            timeLeft = Int(time)
+ 
+            
             updateLabel()
             
             startCountdown()
@@ -100,38 +107,46 @@ class ViewController: UIViewController {
     
     func startSound() {
         buttonText.setTitle("Stop Music", for: .normal)
-            //play sound
+        //play sound
         guard let url = Bundle.main.url(forResource: "cartoon", withExtension: ".mp3") else { return }
-        
+            
         do {
             sound = try AVAudioPlayer(contentsOf: url)
             sound?.play()
         } catch let error {
             print("Error playing sound. \(error.localizedDescription)")
         }
+    }
+        
             
-            
-        }
         
         func startCountdown() {
             Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
                 if self.secs > 0 {
                     self.secs = self.secs - 1
+                    self.timeLeft = self.timeLeft - 1
                 }
                 else if self.mins > 0 && self.secs == 0 {
                     self.mins = self.mins - 1
                     self.secs = 59
+                    self.timeLeft = self.timeLeft - 1
                 }
                 else if self.hours > 0 && self.mins == 0 && self.secs == 0 {
                     self.hours = self.hours - 1
                     self.mins = 59
                     self.secs = 59
+                    self.timeLeft = self.timeLeft - 1
                     
                 }
                 
+                
                 self.updateLabel()
+                
+                if self.timeLeft < 1 {
+                    self.startSound()
+                }
             })
-          
+            
         }
         
     
@@ -159,12 +174,12 @@ class ViewController: UIViewController {
                 secsTag = ""
             }
                 
-                countdownTimer.text = "Time Remaining: \(hoursTag)\(hours):\(minsTag)\(mins):\(secsTag)\(secs)"
+            countdownTimer.text = "Time Remaining: \(hoursTag)\(hours):\(minsTag)\(mins):\(secsTag)\(secs)"
            
-            if hours + mins + secs < 1 {
-                startSound()
-            }
+            
+            
         }
+
         
         
         
