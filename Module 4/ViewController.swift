@@ -121,7 +121,7 @@ class ViewController: UIViewController {
             
         
         func startCountdown() {
-            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
                 if self.secs > 0 {
                     self.secs = self.secs - 1
                     self.timeLeft = self.timeLeft - 1
